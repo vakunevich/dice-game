@@ -1,0 +1,39 @@
+<div class="block-column">
+  <button mat-raised-button color="primary"
+          *ngIf="!isGameStarted()"
+          (click)="startGame()">
+    Start Game
+  </button>
+  <div *ngIf="isGameStarted()">
+    <h2>Opponent's Roll</h2>
+    <div class="dice">
+      <!--Opponent dice image here-->
+      <img *ngFor="let dice of opponentDiceList" src="/assets/{{dice}}.png">
+      <img *ngIf="!opponentDiceList.length" src="/assets/question.png"/>
+    </div>
+    <div>
+      <h2>Result</h2>
+      <div class="dice">
+        <!--Player dice images here-->
+        <img *ngFor="let dice of playerDiceList" src="/assets/{{dice}}.png">
+        <img *ngIf="!playerDiceList.length" src="/assets/question.png">
+      </div>
+      <div *ngIf="isGameLost()" class="lose">You lost!</div>
+
+      <h2>Controls</h2>
+      <div>
+        <button mat-raised-button color="primary"
+                (click)="playerRoll()" [disabled]="isGameLost()">
+          Hit Me!
+        </button>
+        <button mat-raised-button color="accent"
+                (click)="opponentRoll()"
+                [disabled]="isGameLost() || playerDiceList.length == 0">
+          Stay!
+        </button>
+      </div>
+      <button mat-raised-button color="warn" (click)="quitGame()">Quit</button>
+      <p><i>Roll over 12, lose!</i></p>
+    </div>
+  </div>
+</div>
